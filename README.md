@@ -46,7 +46,7 @@ First you'll want to download a few things:
 
 * [MicroPython for the ESP8266](http://micropython.org/download#esp8266) (recent stable build)
 * [e-Ink Library for MicroPython](https://github.com/dhallgb/eInk-micropython)
-* [Custom Project Files](https://github.com/matthewbryancurtis)
+* [Custom Project Files](https://github.com/UncorkedStudios/esp8266-iot-door)
 
 The device side of things has a few dependencies:
 
