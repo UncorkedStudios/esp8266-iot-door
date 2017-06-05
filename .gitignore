@@ -1,0 +1,8 @@
+eink.py
+secret.py
+rooms.py
+client_secret.json
+env
+__pycache__
+.DS_STORE
+*.bin
