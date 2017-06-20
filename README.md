@@ -68,7 +68,7 @@ esptool.py --port /dev/tty.SLAB_USBtoUART erase_flash
 esptool.py --port /dev/tty.SLAB_USBtoUART --baud 115200 write_flash --flash_size=detect 0 esp8266-20170526-v1.9.bin
 ```
 
-If you run into any issues, you may need to adjust the baud rate and make sure you're getting enough power to the ESP8266 (I had to use a powered USB hub for this).I tend to power cycle the ESP at this point - boom, you have MicroPython! Now's a good time to create a `secret.py` file for your ESP:
+If you run into any issues, you may need to adjust the baud rate and make sure you're getting enough power to the ESP8266 (I had to use a powered USB hub for this). I tend to power cycle the ESP at this point - boom, you have MicroPython! Now's a good time to create a `secret.py` file for your ESP:
 
 ``` Python
 # secret.py
