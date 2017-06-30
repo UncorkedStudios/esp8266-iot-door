@@ -1,5 +1,7 @@
 # IoT Door Signs
 
+> Last updated June 30, 2017
+
 ## Abstract
 
 This is a project using an NodeMCU ESP8266, a Waveshare 4.3inch e-Paper display, and optionally a [PCB from electronictrik](https://www.tindie.com/products/electronictrik/high-tech-e-paper-iot-door-sign/) to create an Internet of Things door sign. This variation uses MicroPython on the ESP8266, Flask on a Raspberry PI, and the Google Calendar API.
@@ -15,6 +17,8 @@ Here's what I used:
 * LiPoly charger (Optional)
 * 2 SMD switches (Optional)
 * 3.7v LiPoly battery (Optional)
+
+> WARNING: The way the plug for the battery is drawn on the PCB led to some confusion. When running from battery power the first time, we fried our charger and ESP8266 beyond repair. Check for continuity before powering with a battery: the battery positive should be going to ‘B+’ on the charger and the battery negative should be going to ‘B-’.
 
 ## File List
 
@@ -55,7 +59,7 @@ To determine the path to your ESP8266, start with it unplugged and run this in y
 ls /dev
 ```
 
-Now plug in your ESP8266 and run the `ls /dev` command again. You should see something new - for me the path to my ESP is `/dev/tty.SLAB_USBtoUART`. Now let's flash the firmware (you'll need to replace the path to your device and the path to the firmware):
+Now plug in your ESP8266 and run the `ls /dev` command again. You should see something new - for me the path to my ESP8266 is `/dev/tty.SLAB_USBtoUART`. Now let's flash the firmware (you'll need to replace the path to your device and the path to the firmware):
 
 ``` shell
 pip install esptool
@@ -107,6 +111,8 @@ ampy --port /dev/tty.SLAB_USBtoUART put demo.py /main.py
 
 When you boot, you should see some fun displays. The demo is a good place to start to see how the e-Ink library works.
 
+> WARNING: Originally I was flashing display.py to /boot.py. I've found that it's best to leave /boot.py alone and use /main.py instead.
+
 ## Setting Up the Flask Server
 
 I'm not going to get too bogged down in documenting Google's API - their API is already well documented. Here are some resources to lead the way though:
@@ -134,6 +140,8 @@ python app.py
 
 The first time you do this, you'll be asked to login to your Google account via a browser popup. Google's code in `helpers.py` will save the credentials so that you won't be asked again in the future.
 
+> It's recommended that you don't rely on the Flask development server in production. For my prototyping needs it worked (mostly) fine, but a live launch will probably need something like Gunicorn and Nginx.
+
 ## Some Code to Change
 
 My code probably isn't going to work for you unless you have a room named Moss. Besides making `secret.py`, `rooms.py`, and getting `client_secret.json`, you'll probably want to change a few things:
@@ -158,8 +166,8 @@ ROOM_NAME = 'moss'
 
 The ESP8266 reaches out to the Flask server via something like `GET http://192.168.1.1/moss`, the Flask server takes the parameter and converts it to the Google CalendarId, a request for the next three events of the day for that room is made with the Google Calendar Resource API, the Flask server formats the response before handing a small JSON file to the ESP8266, and then the ESP8266 displays the data.
 
-It's recommended that you don't rely on the Flask development server in production. For my prototyping needs it worked (mostly) fine, but a live launch will probably need something like Gunicorn and Nginx.
-
 The battery life isn't ideal, which is why I'm working on `display_deep_sleep.py` to put the ESP8266 into deep sleep in between API calls.
+
+Hopefully this gives some pointers to anyone trying to work with an ESP8266 and E Ink display in MicroPython. Feel free to dig through the source code; I went through and commented everything so it should be pretty accessible.
 
 Thanks for looking!
