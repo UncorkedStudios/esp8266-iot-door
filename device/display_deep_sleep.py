@@ -35,7 +35,7 @@ def display_data():
         pass
 
     # Deep sleep for a minute
-    deep_sleep(60000)
+    deep_sleep(300000)
 
 def deep_sleep(sleep_length):
     # To preserve power, we'll go into deep sleep between API calls
